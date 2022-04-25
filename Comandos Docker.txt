@@ -1,0 +1,41 @@
+Docker = Possui os conteiners
+	namespaces = isolam os processos
+		Podem conter o processo pai = conteiner 1 e seu processos filhos
+		gerenci os PIDs dos processos filhos, user, network
+	Cgroups = isolam os recursos de hardware.
+		memory = 500MB
+		cpu_shares = 512
+		file System = OFS (Overlay File System)
+	Conteiners possuem imagens baseado em um template, a imagem é imutável. Quando sobe um conteiner/imagem é possivel escrever e ler no conteiner, se derrubar e subir novamente o conteiner ele estara zerado. Raramente uma imagem sofrerá um commit gerando uma nova imagem.
+
+
+docker ps         //Mostrar os conteiner em execução.
+docker ps -a      //Mostrar os conteiners instalados.
+docker version    //Mostrar a versão do docker
+docker pull mysql //instala a imagems do conteiner mysql
+docker pull mysql:5.7 //instala a imagems do conteiner mysql 5.7
+docker stop name-of-conteiner          //Parar um conteiner
+docker start name-of-conteiner         //Reinicia um conteiner
+docker exec -it name-of-conteiner bash //Entre na conteiner de forma interativa
+
+
+docker run --name php1   -d -p 8080:80 php
+docker run --name mysql1 -d -e MYSQL_ROOT_PASSWORD=rootroot -p 33061:3306 mysql:5.7
+
+docker build -t mysql-doug -f Dockerfile .      //Criar uma imagem baseada em outra utilizando um Dockerfile
+docker run -d --rm --name mysql1 -p 33061:3306 mysql-doug     //Cria um novo conteiner baseado na nova imagem --rm exclui se já estiver criado
+docker run -d --rm -v C:\Users\dougl\OneDrive\Documents\DockerProjects\mysql1\volume:/var/lib/mysql --name mysql1 mysql-doug
+
+docker exec -i mysql1 mysql -uroot -rooroot < db/script.sql //executar de forma interativa no conteiner utilizando o mysql intalado senha e script.sql
+
+docker exec -t -i mycontainer /bin/bash
+
+version: '3'
+
+services:
+	mysql1:
+		image: mysql-doug
+		volumes:
+			- .volume:/var/lib/mysql
+		ports:
+			- 33061:3306
