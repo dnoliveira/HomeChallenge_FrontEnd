@@ -1,0 +1,53 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Detail of Product')}"></head>
+
+<body>
+<main>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <h1>Product</h1>
+                <b>Id:</b> <span th:text="${product.id}"></span><br/>
+                <b>Name:</b> <span th:text="${product.name}"></span><br/>
+                <b>Price:</b> <span th:text="${product.price}"></span><br/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <br>
+                <h2>Promotion</h2>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Qty Required</th>
+                        <th scope="col">Qty Free</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">amount</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="promotion : ${product.promotions}">
+                        <th class="col-2" scope="row" th:text="${product.id}">ID</th>
+                        <td class="col-4" th:text="${promotion.type.toString()}">Type</td>
+                        <td class="col-1" th:text="${promotion.required_qty}">Qty Required</td>
+                        <td class="col-2" th:text="${promotion.free_qty}">Qty Free</td>
+                        <td class="col-2" th:text="${promotion.price}">Price</td>
+                        <td class="col-1" th:text="${promotion.amount}">amount</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <a href="/products">Voltar</a>
+            </div>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>

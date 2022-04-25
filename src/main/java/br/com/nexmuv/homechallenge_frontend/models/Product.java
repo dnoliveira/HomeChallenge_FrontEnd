@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,7 +16,7 @@ public class Product {
     private String id;
     private String name;
     private BigDecimal price;
-    private Promotion promotion;
+    private List<Promotion> promotions;
 
     public Product(String id, String name, BigDecimal price){
         this.id = id;
