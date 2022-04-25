@@ -1,0 +1,32 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Your Basket')}"></head>
+
+<body>
+<main>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-2">
+                <form action="/basket" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">Product Id: </label>
+                        <input class="form-control" type="text" name="id">
+                    </div>
+                    <button class="btn btn-primary" type="submit">Add</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <h1>Products</h1>
+            </div>
+            <div class="col-6">
+                <h1>Total</h1>
+            </div>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>
