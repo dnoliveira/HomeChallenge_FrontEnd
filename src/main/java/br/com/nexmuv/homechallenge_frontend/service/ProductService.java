@@ -9,6 +9,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
@@ -29,27 +30,38 @@ public class ProductService {
     public List<Product> findAll(){
         log.debug("Request to get All Products");
 
-        Mono<List<Product>> monoProductList = this.webClient
-                .method(HttpMethod.GET)
-                .uri("/products")
-                .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<List<Product>>() {});
+        List<Product> productList = new ArrayList<Product>();
+        try {
+            Mono<List<Product>> monoProductList = this.webClient
+                    .method(HttpMethod.GET)
+                    .uri("/products")
+                    .retrieve()
+                    .bodyToMono(new ParameterizedTypeReference<List<Product>>() {});
 
-        List<Product> productList = monoProductList.block();
+            productList = monoProductList.block();
+        } catch (WebClientResponseException wex){
+            //TODO - Tratar o retorno quando a lista de produtos for vazia
+        }
 
         return productList;
     }
 
     public Product findOne(String id) {
-        log.debug("Request to get All Products");
+        log.debug("Request to get one Product id: " + id);
 
-        Mono<Product> monoProduct = this.webClient
-                .method(HttpMethod.GET)
-                .uri("/products/" + id)
-                .retrieve()
-                .bodyToMono(Product.class);
+        Product product = null;
 
-        Product product = monoProduct.block();
+        try {
+            Mono<Product> monoProduct = this.webClient
+                    .method(HttpMethod.GET)
+                    .uri("/products/" + id)
+                    .retrieve()
+                    .bodyToMono(Product.class);
+
+            product = monoProduct.block();
+        } catch (WebClientResponseException wex){
+            //TODO - Tratar o retorno quando nao existir produt
+        }
 
         return product;
     }

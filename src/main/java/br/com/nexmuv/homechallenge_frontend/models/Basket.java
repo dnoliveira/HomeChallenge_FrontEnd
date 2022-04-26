@@ -28,4 +28,9 @@ public class Basket {
         productList.add(product);
         this.total = this.total.add(product.getPrice());
     }
+
+    public void clear(){
+        this.productList.clear();
+        this.total = new BigDecimal(0.0);
+    }
 }
