@@ -29,6 +29,7 @@ public class BasketController {
     @GetMapping("")
     public ModelAndView show(BasketProductForm basketProductForm) {
         System.out.println(basketProductForm);
+        System.out.println(sessionBasket);
         ModelAndView mv = new ModelAndView("basket/show");
         mv.addObject("basket", sessionBasket);
 

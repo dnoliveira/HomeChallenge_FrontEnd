@@ -18,11 +18,40 @@
         </div>
 
         <div class="row">
+            <h1>Products</h1>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col" align="right">Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="product : ${basket.productList}">
+                        <th class="col-3" scope="row" th:text="${product.id}">ID</th>
+                        <td class="col-6" th:text="${product.name}">name</td>
+                        <td class="col-3 col-auto" align="right" th:text="${product.priceStr}">price</td>
+                    </tr>
+                    <tr>
+                        <th class="col-3" scope="row">&nbsp</th>
+                        <td class="col-6" ><b>Total</b></td>
+                        <td class="col-3 col-auto" align="right" th:text="${basket.totalFormat}">total</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row">
             <div class="col-6">
-                <h1>Products</h1>
+                <form action="/basket/clean" method="POST">
+                    <button class="btn btn-danger" type="submit">Clean Basket</button>
+                </form>
             </div>
             <div class="col-6">
-                <h1>Total</h1>
+                <form action="/Checkout" method="POST">
+                    <button class="btn btn-primary" type="submit">Checkout</button>
+                </form>
             </div>
         </div>
     </div>
