@@ -1,6 +1,7 @@
 package br.com.nexmuv.homechallenge_frontend.service;
 
 import br.com.nexmuv.homechallenge_frontend.models.Product;
+import br.com.nexmuv.homechallenge_frontend.models.Promotion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,6 @@ import reactor.core.publisher.Mono;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -39,6 +39,11 @@ public class ProductService {
                     .bodyToMono(new ParameterizedTypeReference<List<Product>>() {});
 
             productList = monoProductList.block();
+
+            for (Product product: productList) {
+                fixPriceOfProduct(product);
+            }
+
         } catch (WebClientResponseException wex){
             //TODO - Tratar o retorno quando a lista de produtos for vazia
         }
@@ -59,11 +64,29 @@ public class ProductService {
                     .bodyToMono(Product.class);
 
             product = monoProduct.block();
+            fixPriceOfProduct(product);
+
         } catch (WebClientResponseException wex){
             //TODO - Tratar o retorno quando nao existir produt
         }
 
         return product;
+    }
+
+    private void fixPriceOfProduct(Product product){
+        BigDecimal price = product.getPrice();
+        BigDecimal divisor = new BigDecimal(100.0);
+        product.setPrice(price.divide(divisor));
+
+        List<Promotion> promotionList = product.getPromotions();
+        if (promotionList != null && promotionList.size() > 0) {
+            for (Promotion promotion : promotionList) {
+                price = promotion.getPrice();
+                if (price != null) {
+                    promotion.setPrice(price.divide(divisor));
+                }
+            }
+        }
     }
 
 }

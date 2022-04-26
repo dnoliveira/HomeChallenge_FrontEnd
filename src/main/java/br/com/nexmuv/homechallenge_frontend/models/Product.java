@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -12,10 +13,10 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 public class Product {
-    private String id;
-    private String name;
-    private BigDecimal price;
-    private List<Promotion> promotions;
+    protected String id;
+    protected String name;
+    protected BigDecimal price;
+    protected List<Promotion> promotions = new ArrayList<>();
 
     public Product(String id, String name, BigDecimal price){
         this.id = id;
