@@ -1,18 +1,14 @@
 package br.com.nexmuv.homechallenge_frontend.service;
 
-import br.com.nexmuv.homechallenge_frontend.models.Basket;
-import br.com.nexmuv.homechallenge_frontend.models.Checkout;
-import br.com.nexmuv.homechallenge_frontend.models.CheckoutProduct;
-import br.com.nexmuv.homechallenge_frontend.models.Product;
+import br.com.nexmuv.homechallenge_frontend.models.*;
+import br.com.nexmuv.homechallenge_frontend.service.promotion.PromotionExecute;
+import br.com.nexmuv.homechallenge_frontend.service.promotion.PromotionExecuteFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class CheckoutService {
@@ -34,20 +30,36 @@ public class CheckoutService {
             this.addProduct(p);
         }
 
-        //===> Get total promos for each Condense Products
+        //===> Get total promos for each Condense Products and fill checkoutProductList
+        this.totalPromos = new BigDecimal(0.0);
+        PromotionExecuteFactory promotionExecuteFactory = new PromotionExecuteFactory();
         Set<String> idProductSet = checkoutProductMapMap.keySet();
+
+        List<CheckoutProduct> checkoutProductList = new ArrayList<CheckoutProduct>();
         for (String idProduct: idProductSet) {
             CheckoutProduct checkoutProduct = checkoutProductMapMap.get(idProduct);
 
+            Promotion promotion = checkoutProduct.getPromotion();
+            if (promotion!=null){
+                PromotionExecute promotionExecute = PromotionExecuteFactory.getPromotionExecute(promotion.getType());
+                BigDecimal promoValue = promotionExecute.execute(checkoutProduct);
+                this.totalPromos = this.totalPromos.add(promoValue);
+            }
+
+            checkoutProductList.add(checkoutProduct);
         }
 
-        return null;
+        this.totalPayable = this.total.subtract(this.totalPromos);
+
+        //Fill Checkout Object
+        Checkout checkout = new Checkout(checkoutProductList, total, totalPromos, totalPayable);
+        return checkout;
     }
 
     private void addProduct(Product product){
         CheckoutProduct checkoutProduct = checkoutProductMapMap.get(product.getId());
         if (checkoutProduct == null){
-            checkoutProduct = new CheckoutProduct(0, product);
+            checkoutProduct = new CheckoutProduct(1, product);
             checkoutProductMapMap.put(product.getId(), checkoutProduct);
         }else{
             checkoutProduct.addQty();

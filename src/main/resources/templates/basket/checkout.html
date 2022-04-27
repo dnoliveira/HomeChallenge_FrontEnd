@@ -3,17 +3,49 @@
 <head th:replace="~{fragments :: head('Your Basket')}"></head>
 
 <body>
+
+<header th:replace="~{fragments :: header('Bascket Checkout')}"></header>
+
 <main>
     <div class="container mt-4">
         <div class="row">
             <div class="col-6">
-                <h1>Products</h1>
-                <b>Count:</b> <span th:text="${basket.count}"></span><br/>
+                <h4>Basket Contents</h4>
+                <table class="table table-hover">
+                    <tbody>
+                    <tr th:each="checkoutProduct : ${checkout.checkoutProductList}">
+                        <th class="col-1" scope="row" th:text="${checkoutProduct.qty}+'x' ">qty</th>
+                        <td class="col-5" th:text="${checkoutProduct.product.name}">name</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
             <div class="col-6">
-                <h1>Total</h1>
+                <h4>Expected Totals</h4>
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <th class="col-2" scope="row">Total:</th>
+                        <td class="col-1" align="right" th:text="${checkout.totalStr}">total</td>
+                    </tr>
+                    <tr>
+                        <th class="" scope="row">Total Promos:</th>
+                        <td class="" align="right" th:text="${checkout.totalPromosStr}">totalPromos</td>
+                    </tr>
+                    <tr>
+                        <th class="" scope="row">Total Payable:</th>
+                        <td class="" align="right" th:text="${checkout.totalPayableStr}">Total Payable:</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
+        <div class="row">
+            <div class="col-12">
+                <a href="/basket">Voltar</a>
+            </div>
+        </div>
+
     </div>
 </main>
 

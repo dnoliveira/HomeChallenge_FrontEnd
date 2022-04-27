@@ -58,11 +58,13 @@ public class BasketController {
         return mv;
     }
 
-    @PostMapping("/clear")
+    @GetMapping("/clear")
     public ModelAndView clear(BasketProductForm basketProductForm) {
         log.info("BasketController.show ['GET'] - basketProductForm: " + basketProductForm.toString());
 
-        sessionBasket.clear();
+        if (sessionBasket != null) {
+            sessionBasket.clear();
+        }
         ModelAndView mv = new ModelAndView("redirect:/basket");
         mv.addObject("basket", sessionBasket);
 

@@ -3,12 +3,13 @@
 <head th:replace="~{fragments :: head('Detail of Product')}"></head>
 
 <body>
+
+<header th:replace="~{fragments :: header('Product Detail')}"></header>
+
 <main>
     <div class="container mt-4">
         <div class="row">
             <div class="col-12">
-                <h1>Product Detail</h1>
-                <br>
                 <b>Id:</b> <span th:text="${product.id}"></span><br/>
                 <b>Name:</b> <span th:text="${product.name}"></span><br/>
                 <b>Price:</b> <span th:text="${product.priceStr}"></span><br/>
@@ -17,7 +18,7 @@
         <div class="row">
             <div class="col-12">
                 <br>
-                <h2>Promotion</h2>
+                <h3>Promotions:</h3>
                 <table class="table table-hover">
                     <thead>
                     <tr>

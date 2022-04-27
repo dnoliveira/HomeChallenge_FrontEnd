@@ -10,7 +10,7 @@ import java.math.RoundingMode;
 public class PromotionExecuteFlatPercent implements PromotionExecute {
 
     @Override
-    public BigDecimal exec(CheckoutProduct checkoutProduct) {
+    public BigDecimal execute(CheckoutProduct checkoutProduct) {
         BigDecimal promoValue = new BigDecimal(0.0);
 
         Promotion promotion = checkoutProduct.getPromotion();

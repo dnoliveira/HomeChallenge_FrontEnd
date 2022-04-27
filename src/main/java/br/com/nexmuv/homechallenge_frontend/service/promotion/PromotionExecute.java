@@ -8,5 +8,5 @@ import java.math.BigDecimal;
 
 public interface PromotionExecute {
 
-    public BigDecimal exec(CheckoutProduct checkoutProduct);
+    public BigDecimal execute(CheckoutProduct checkoutProduct);
 }
