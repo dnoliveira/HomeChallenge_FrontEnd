@@ -1,0 +1,16 @@
+Basket
+	- Implementar a exclusão de um produto.
+	- Pedir confirmação da limpesa da cesta.
+	- Implementar mensagem de erro se produto não existir.
+
+Tratar todas as consultas da API quando esta retornar um erro, seja por inxistencia de informações ou outros motivos.
+Criado branches no GitHub para cada etapa do projeto.
+Teria colocado mais comentários. Principalmente nas regras de negócio.
+
+O retorno da API
+	- Quando pesquisar um produto que não existe retornar um json vazio e não um erro.
+	- Talvez alterar o retorno considerando o ponto flutuante, está exigindo um processamento extra.
+	- Checar em alguns lugares se alguns objetos estão sendo instanciados em algum loop desnecessáriamente.
+
+BigDecimal divisor = new BigDecimal(100.0);
+BigDecimal newPrice = price.divide(divisor);

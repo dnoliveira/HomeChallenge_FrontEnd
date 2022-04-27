@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class CheckoutService {
@@ -30,16 +31,20 @@ public class CheckoutService {
         this.checkoutProductMapMap.clear();
         List<Product> productList = basket.getProductList();
         for (Product p: productList) {
-            this.add(p);
+            this.addProduct(p);
         }
 
-        //===> Get total promos
+        //===> Get total promos for each Condense Products
+        Set<String> idProductSet = checkoutProductMapMap.keySet();
+        for (String idProduct: idProductSet) {
+            CheckoutProduct checkoutProduct = checkoutProductMapMap.get(idProduct);
 
+        }
 
         return null;
     }
 
-    private void add(Product product){
+    private void addProduct(Product product){
         CheckoutProduct checkoutProduct = checkoutProductMapMap.get(product.getId());
         if (checkoutProduct == null){
             checkoutProduct = new CheckoutProduct(0, product);
