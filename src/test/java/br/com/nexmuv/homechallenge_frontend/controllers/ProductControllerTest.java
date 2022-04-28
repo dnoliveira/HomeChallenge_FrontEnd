@@ -22,6 +22,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebMvcTest(ProductController.class)
 public class ProductControllerTest {
@@ -59,18 +61,29 @@ public class ProductControllerTest {
                                 Matchers.containsString("<b>Id:</b> <span>Dwt5F7KAhi</span><br/>") )
                             )
                 .andReturn();
+    }
 
-        /*
-        Mockito.when(this.productService.findOne("Dwt5F7KAhi")).
-                thenReturn(new Product("Dwt5F7KAhi", "Amazing Pizza!", new BigDecimal(10.99)));
+    @Test
+    public void searchListOfProduts() throws Exception {
+        List<Product> productList = new ArrayList<Product>();
+        productList.add( new Product("Dwt5F7KAhi", "Amazing Pizza!", new BigDecimal(10.99)));
+        productList.add( new Product("PWWe3w1SDU", "Amazing Burger!", new BigDecimal(9.99)));
 
-        RestAssuredMockMvc
-            .given()
-                .accept(ContentType.HTML)
-            .when()
-                .get("/products/{id}","Dwt5F7KAhi")
-            .then()
-                .statusCode(HttpStatus.OK.value());
-         */
+        Mockito.when(this.productService.findAll()).
+                thenReturn(productList);
+
+        RequestBuilder request = MockMvcRequestBuilders
+                .get("/products")
+                .accept(MediaType.TEXT_HTML);
+
+        MvcResult result = mockMvc.perform(request)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string(
+                        Matchers.containsString("<th class=\"col-1\" scope=\"row\">Dwt5F7KAhi</th>") )
+                )
+                .andExpect(MockMvcResultMatchers.content().string(
+                        Matchers.containsString("<th class=\"col-1\" scope=\"row\">PWWe3w1SDU</th>") )
+                )
+                .andReturn();
     }
 }

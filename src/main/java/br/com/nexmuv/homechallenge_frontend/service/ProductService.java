@@ -21,11 +21,14 @@ import java.util.List;
 public class ProductService {
     private final Logger log = LoggerFactory.getLogger((ProductService.class));
 
-    @Autowired
     public Environment env;
 
-    @Autowired
     private WebClient webClient;
+
+    public ProductService(Environment env, WebClient webClient){
+        this.env = env;
+        this.webClient = webClient;
+    }
 
     public List<Product> findAll(){
         log.debug("Request to get All Products");
