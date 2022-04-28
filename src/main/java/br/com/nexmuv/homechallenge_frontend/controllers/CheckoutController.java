@@ -6,6 +6,7 @@ import br.com.nexmuv.homechallenge_frontend.service.CheckoutService;
 import br.com.nexmuv.homechallenge_frontend.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,11 +23,14 @@ public class CheckoutController {
     @Resource(name = "sessionBasket")
     Basket sessionBasket;
 
-    private final CheckoutService checkoutService;
+    @Autowired
+    private CheckoutService checkoutService;
 
+    /*
     public CheckoutController(CheckoutService checkoutService){
         this.checkoutService = checkoutService;
     }
+    */
 
     @GetMapping("")
     public ModelAndView show() {

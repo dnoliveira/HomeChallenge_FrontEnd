@@ -24,11 +24,14 @@ public class BasketController {
     @Resource(name = "sessionBasket")
     Basket sessionBasket;
 
-    private final ProductService productService;
+    @Autowired
+    private ProductService productService;
 
+    /*
     public BasketController(ProductService productService){
         this.productService = productService;
     }
+    */
 
     @GetMapping("")
     public ModelAndView show(BasketProductForm basketProductForm) {
