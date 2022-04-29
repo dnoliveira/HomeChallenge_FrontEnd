@@ -1,6 +1,6 @@
 Basket
 	- Implementar a exclusão de um produto.
-	- Pedir confirmação da limpesa da cesta.
+	- Pedir confirmação da limpeza da cesta.
 	- Implementar mensagem de erro se produto não existir.
 
 Tratar todas as consultas da API quando esta retornar um erro, seja por inxistencia de informações ou outros motivos.
