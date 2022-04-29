@@ -47,8 +47,9 @@ public class ProductService {
                 fixPriceOfProduct(product);
             }
 
-        } catch (WebClientResponseException wex){
-            //TODO - Tratar o retorno quando a lista de produtos for vazia
+        } catch (Exception wex){
+            log.error("=======> Request to get All Products by API is failed. <=======");
+            log.error(wex.getMessage() + " - " + wex.getClass().getName());
         }
 
         return productList;
@@ -69,8 +70,9 @@ public class ProductService {
             product = monoProduct.block();
             fixPriceOfProduct(product);
 
-        } catch (WebClientResponseException wex){
-            //TODO - Tratar o retorno quando nao existir produt
+        } catch (Exception wex){
+            log.error("=======> Request by API to get one Product id: " + id + " is failed. <=======");
+            log.error(wex.getMessage() + " - " + wex.getClass().getName());
         }
 
         return product;
